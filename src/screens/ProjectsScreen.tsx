@@ -16,7 +16,7 @@ const ProjectsScreen: React.FC = () => {
   const [isCreateModalVisible, setCreateModalVisible] = useState(false);
   const [newProjectName, setNewProjectName] = useState('');
   const [newProjectDescription, setNewProjectDescription] = useState('');
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
 
   useEffect(() => {
     const getToken = async () => {
@@ -87,7 +87,8 @@ const ProjectsScreen: React.FC = () => {
 
   const handleProjectDetails = (projectName: string) => {
     console.log('proyecto', projectName);
-    navigation.navigate('ProjectDetail', { projectName } as never);
+    navigation.navigate('ProjectDetail', { projectName } as { projectName: string });
+
   };
   
 

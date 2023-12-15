@@ -7,7 +7,8 @@ import { useNavigation } from '@react-navigation/native';
 
 const TaskScreen: React.FC = () => {
   const route = useRoute();
-  const { taskId } = route.params;
+  const taskId = (route.params as any)?.taskId;
+
   const [taskDetails, setTaskDetails] = useState<any>(null);
   const [isCommentModalVisible, setCommentModalVisible] = useState(false);
   const [isStatusModalVisible, setStatusModalVisible] = useState(false);

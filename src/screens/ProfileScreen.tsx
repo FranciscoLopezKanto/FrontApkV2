@@ -48,7 +48,6 @@ const ProfileScreen: React.FC = () => {
           }
         });
         console.log(response);
-        // Almacena los datos del perfil en AsyncStorage
         await AsyncStorage.setItem('userProfile', JSON.stringify(response.data));
 
         setUserProfile(response.data);
@@ -95,15 +94,12 @@ const ProfileScreen: React.FC = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-
       setUserProfile({ ...userProfile, username: updatedUsername, password: updatedPassword });
-
-      // Muestra un mensaje de cambio 
       setLogoutMessage('Cambio realizado exitosamente');
 
       setTimeout(() => {
         setLogoutMessage(null);
-        // Realiza un nuevo llamado a getProfile para actualizar la pantalla con los datos actualizados
+
         getProfile();
       }, 1000);
 
@@ -147,6 +143,7 @@ const ProfileScreen: React.FC = () => {
           <View style={styles.profileInfo}>
             <Text style={styles.username}>Nombre de Usuario: {userProfile.name}</Text>
             <Text style={styles.email}>Email: {userProfile.email}</Text>
+            <Text style={styles.email}>Email: {userProfile.role}</Text>
           </View>
         ) : (
           <Text>Cargando perfil...</Text>
