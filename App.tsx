@@ -42,8 +42,9 @@ export default function App() {
         <Stack.Screen name="Recovery" component={RecoveryScreen} />
         <Stack.Screen name='Teams' component={TeamsScreen} />
         <Stack.Screen name='Projects' component={ProjectsScreen} />
-        <Stack.Screen name="ProjectDetail" component={ProjectDetailScreen} />
-        <Stack.Screen name="TaskScreen" component={TaskScreen} />
+        <Stack.Screen name="ProjectDetail" component={ProjectDetailScreen} options={{ headerShown: true }} />
+        <Stack.Screen name="TaskScreen" component={TaskScreen} options={{ headerShown: true }} />
+
         
       </Stack.Navigator>
     </NavigationContainer>
