@@ -143,7 +143,7 @@ const ProfileScreen: React.FC = () => {
           <View style={styles.profileInfo}>
             <Text style={styles.username}>Nombre de Usuario: {userProfile.name}</Text>
             <Text style={styles.email}>Email: {userProfile.email}</Text>
-            <Text style={styles.email}>Email: {userProfile.role}</Text>
+            <Text style={styles.email}>Rol: {userProfile.rol}</Text>
           </View>
         ) : (
           <Text>Cargando perfil...</Text>

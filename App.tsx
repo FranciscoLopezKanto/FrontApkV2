@@ -63,7 +63,7 @@ export default function App() {
               iconName = focused ? 'person' : 'person-outline';
             } else if (route.name === 'Projects') {
               iconName = focused ? 'list' : 'list-outline';
-            } else if (route.name === 'Users') {
+            } else if (route.name === 'Teams') {
               iconName = focused ? 'people' : 'people-outline';
               return <Ionicons name={iconName} size={size} color={color} />;
             }
@@ -90,7 +90,7 @@ export default function App() {
           options={{ headerShown: false }}
         />
         <Tab.Screen
-          name="Users"
+          name="Teams"
           component={TeamsScreen}
           options={{ headerShown: false }}
         />

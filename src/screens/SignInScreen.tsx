@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity, ImageBackground } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity, ImageBackground, Picker } from 'react-native';
 import axios from 'axios';
 
 const showPasswordIcon = require('../public/MostrarContra.png');
@@ -21,30 +21,34 @@ const RegisterScreen = ({ navigation }: any) => {
   const handleRegister = async (
     name: string,
     email: string,
-    rol:string,
+    rol: string,
     password: string
   ) => {
     setError(false);
 
+    if (password.length < 6) {
+      setError(true);
+      setErrorMessage('La contraseña debe tener al menos 6 caracteres.');
+      return;
+    }
+
     try {
       const response = await axios.post(`http://localhost:3000/api/v1/auth/register`, {
-        name:name,
-        email:email,
-        password:password,
-        role:rol,
-        
+        name: name,
+        email: email,
+        password: password,
+        role: rol,
       });
       console.log(response);
       setTimeout(() => {
-        navigation.navigate('Login' as never);//te lleva al login al registrarse para logearse
-      }, 2000);
-      console.log("usuario registrado");
+        navigation.navigate('Login' as never);
+      }, 1000);
+      console.log('usuario registrado');
     } catch (e: any) {
       setError(true);
-      console.error("Error al iniciar sesión:", e); 
-      setErrorMessage("Ocurrió un error al iniciar sesión.");
+      console.error('Error al registrar usuario:', e);
+      setErrorMessage('Ocurrió un error al registrar usuario.');
     }
-    
   };
 
   return (
@@ -65,12 +69,18 @@ const RegisterScreen = ({ navigation }: any) => {
             onChangeText={(text: string) => setEmail(text)}
             style={styles.input}
           />
-          <TextInput
-            placeholder="Rol"
-            value={rol}
-            onChangeText={(text: string) => setRol(text)}
-            style={styles.input}
-          />
+          {/* Agregado: Lista seleccionable de roles */}
+          <Picker
+            selectedValue={rol}
+            style={styles.picker}
+            onValueChange={(itemValue, itemIndex) => setRol(itemValue)}
+          >
+            <Picker.Item label="Selecciona un rol" value="" />
+            <Picker.Item label="Programador" value="programador" />
+            <Picker.Item label="Rol2" value="rol2" />
+            <Picker.Item label="Rol3" value="rol3" />
+          </Picker>
+          {/* Fin de la lista seleccionable de roles */}
           <View style={styles.passwordInputContainer}>
             <View style={styles.passwordInput}>
               <TextInput
@@ -91,12 +101,12 @@ const RegisterScreen = ({ navigation }: any) => {
           {error && <Text style={styles.errorText}>{errorMessage}</Text>}
           <TouchableOpacity
             style={styles.button}
-            onPress={() => handleRegister(username, email,rol, password)}
+            onPress={() => handleRegister(username, email, rol, password)}
           >
             <Text style={styles.buttonText}>Registrarse</Text>
           </TouchableOpacity>
           <Text onPress={() => navigation.navigate('Login')} style={styles.link}>
-            Ya tienes una cuenta? Inicia Sesión.
+            ¿Ya tienes una cuenta? Inicia Sesión.
           </Text>
         </View>
       </View>
@@ -120,7 +130,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingBottom: 10,
     borderRadius: 5,
-    
   },
   titleWithOutline: {
     textShadowColor: 'rgba(255, 0, 0, 0.75)',
@@ -137,6 +146,14 @@ const styles = StyleSheet.create({
     width: 240,
     marginBottom: 20,
     padding: 5,
+    borderWidth: 1,
+    borderColor: 'black',
+    borderRadius: 10,
+  },
+  picker: {
+    height: 40,
+    width: 240,
+    marginBottom: 20,
     borderWidth: 1,
     borderColor: 'black',
     borderRadius: 10,

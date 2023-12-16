@@ -415,7 +415,8 @@ const TeamsScreen: React.FC = () => {
         data={membersModalData}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
-          <Text>{`Nombre de usuario: ${item.name}`}</Text>
+          <Text>{`Nombre de usuario: ${item.name} (${item.rol})`}</Text>
+
         )}
       />
       <Button title="Cerrar" onPress={() => setMembersModalVisible(false)} />
