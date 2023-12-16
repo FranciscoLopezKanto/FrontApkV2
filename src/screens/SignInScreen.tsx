@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity, ImageBackground, Picker } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity, ImageBackground, Modal, Button } from 'react-native';
 import axios from 'axios';
+import { Picker } from '@react-native-picker/picker';
 
 const showPasswordIcon = require('../public/MostrarContra.png');
 const backgroundImage = require('../public/fondo.png');
@@ -13,6 +14,8 @@ const RegisterScreen = ({ navigation }: any) => {
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -26,6 +29,12 @@ const RegisterScreen = ({ navigation }: any) => {
   ) => {
     setError(false);
 
+    if (!name || !email || !rol || !password) {
+      setError(true);
+      setErrorMessage('Todos los campos son obligatorios.');
+      return;
+    }
+
     if (password.length < 6) {
       setError(true);
       setErrorMessage('La contraseña debe tener al menos 6 caracteres.');
@@ -34,16 +43,21 @@ const RegisterScreen = ({ navigation }: any) => {
 
     try {
       const response = await axios.post(`http://localhost:3000/api/v1/auth/register`, {
-        name: name,
-        email: email,
-        password: password,
+        name,
+        email,
+        password,
         role: rol,
       });
-      console.log(response);
+
+      setModalMessage('Usuario registrado correctamente');
+      setModalVisible(true);
+
       setTimeout(() => {
+        setModalVisible(false);
         navigation.navigate('Login' as never);
-      }, 1000);
-      console.log('usuario registrado');
+      }, 2000);
+
+      console.log(response);
     } catch (e: any) {
       setError(true);
       console.error('Error al registrar usuario:', e);
@@ -69,18 +83,16 @@ const RegisterScreen = ({ navigation }: any) => {
             onChangeText={(text: string) => setEmail(text)}
             style={styles.input}
           />
-          {/* Agregado: Lista seleccionable de roles */}
           <Picker
             selectedValue={rol}
             style={styles.picker}
-            onValueChange={(itemValue, itemIndex) => setRol(itemValue)}
+            onValueChange={(itemValue: React.SetStateAction<string>) => setRol(itemValue)}
           >
             <Picker.Item label="Selecciona un rol" value="" />
             <Picker.Item label="Programador" value="programador" />
-            <Picker.Item label="Rol2" value="rol2" />
-            <Picker.Item label="Rol3" value="rol3" />
+            <Picker.Item label="Scrum Master" value="Scrum Master" />
+            <Picker.Item label="Diseñador" value="Diseñador" />
           </Picker>
-          {/* Fin de la lista seleccionable de roles */}
           <View style={styles.passwordInputContainer}>
             <View style={styles.passwordInput}>
               <TextInput
@@ -109,6 +121,19 @@ const RegisterScreen = ({ navigation }: any) => {
             ¿Ya tienes una cuenta? Inicia Sesión.
           </Text>
         </View>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => setModalVisible(false)}
+        >
+          <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+              <Text style={styles.modalMessage}>{modalMessage}</Text>
+              <Button title="Cerrar" onPress={() => setModalVisible(false)} />
+            </View>
+          </View>
+        </Modal>
       </View>
     </ImageBackground>
   );
@@ -142,7 +167,7 @@ const styles = StyleSheet.create({
     color: '#000',
   },
   input: {
-    backgroundColor: '#ffffff',
+    backgroundColor: '#fff',
     width: 240,
     marginBottom: 20,
     padding: 5,
@@ -169,7 +194,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   button: {
-    backgroundColor: '#0052cc',
+    backgroundColor: '#004080',
     borderRadius: 15,
     alignItems: 'center',
     height: 40,
@@ -212,6 +237,23 @@ const styles = StyleSheet.create({
   passwordVisibilityIcon: {
     width: 25,
     height: 25,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    backgroundColor: 'white',
+    padding: 30,
+    borderRadius: 12,
+    elevation: 5,
+  },
+  modalMessage: {
+    fontSize: 18,
+    textAlign: 'center',
+    marginBottom: 20,
   },
 });
 

@@ -186,7 +186,7 @@ const ProjectDetail: React.FC<{ route: any; navigation: any }> = ({ route, navig
     }
   };
   const handleTaskPress = (taskId: string) => {
-    // Navegar a la pantalla de tarea y pasar el ID de la tarea
+    
     console.log(taskId);
     navigation.navigate('TaskScreen', { taskId });
   };
@@ -208,8 +208,6 @@ const ProjectDetail: React.FC<{ route: any; navigation: any }> = ({ route, navig
               </View>
             </Card.Content>
           </Card>
-
-          {/* Equipos */}
           {projectDetails?.equipos && (
             <Card style={styles.cardContainer}>
               <Card.Content>
@@ -225,8 +223,6 @@ const ProjectDetail: React.FC<{ route: any; navigation: any }> = ({ route, navig
               </Card.Content>
             </Card>
           )}
-
-          {/* Tareas */}
           {projectDetails?.tareas && (
             <Card style={styles.cardContainer}>
               <Card.Content>
@@ -244,8 +240,6 @@ const ProjectDetail: React.FC<{ route: any; navigation: any }> = ({ route, navig
               </Card.Content>
             </Card>
           )}
-
-          {/* Modal para editar proyectos */}
           <Modal
             transparent={true}
             visible={editModalVisible}
@@ -273,8 +267,6 @@ const ProjectDetail: React.FC<{ route: any; navigation: any }> = ({ route, navig
               </View>
             </View>
           </Modal>
-
-          {/* Modal para confirmar eliminación */}
           <Modal
             transparent={true}
             visible={deleteModalVisible}
@@ -288,8 +280,6 @@ const ProjectDetail: React.FC<{ route: any; navigation: any }> = ({ route, navig
               </View>
             </View>
           </Modal>
-
-          {/* Modal para agregar/quitar equipo */}
           <Modal
             transparent={true}
             visible={equipoModalVisible}
@@ -311,8 +301,6 @@ const ProjectDetail: React.FC<{ route: any; navigation: any }> = ({ route, navig
               </View>
             </View>
           </Modal>
-
-          {/* Modal para agregar tarea */}
           <Modal
             transparent={true}
             visible={taskModalVisible}
