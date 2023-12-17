@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, Button, Modal, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useRoute } from '@react-navigation/native';
-import { useNavigation } from '@react-navigation/native';
+import { useRoute, useNavigation } from '@react-navigation/native';
+
 
 const TaskScreen: React.FC = () => {
   const route = useRoute();
@@ -83,6 +83,22 @@ const TaskScreen: React.FC = () => {
     }
   };
 
+  const eliminarTarea = async () => {
+    try {
+      const token = await AsyncStorage.getItem('userToken');
+      await axios.delete(`http://localhost:3000/api/v1/task/${taskId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      
+      navigation.navigate('Home' as never);
+
+    } catch (error) {
+      console.error('Error al eliminar la tarea', error);
+    }
+  };
+
   const recargarDetalles = async () => {
     try {
       const token = await AsyncStorage.getItem('userToken');
@@ -112,8 +128,6 @@ const TaskScreen: React.FC = () => {
           <Text>Estado: {taskDetails.estado}</Text>
           <Text>Fecha de Inicio: {taskDetails.fechaInicio}</Text>
           <Text>Fecha de Término: {new Date(taskDetails.fechaTermino).toLocaleDateString()}</Text>
-
-          {/* Sección de Comentarios */}
           <View style={styles.commentsSection}>
             <Text style={styles.commentsHeader}>Comentarios:</Text>
             {taskDetails.comentarios.map((comentario: any) => (
@@ -122,14 +136,11 @@ const TaskScreen: React.FC = () => {
               </View>
             ))}
           </View>
-
-          {/* Botones de Acción */}
           <View style={styles.actionButtons}>
             <Button title="Agregar Comentario" onPress={() => setCommentModalVisible(true)} />
             <Button title="Cambiar Estado" onPress={() => setStatusModalVisible(true)} />
+            <Button title="Eliminar" onPress={eliminarTarea} />
           </View>
-
-          {/* Modal para agregar comentario */}
           <Modal visible={isCommentModalVisible} transparent animationType="slide">
             <View style={styles.modalContainer}>
               <View style={styles.modalContent}>
@@ -143,8 +154,6 @@ const TaskScreen: React.FC = () => {
               </View>
             </View>
           </Modal>
-
-          {/* Modal para cambiar estado */}
           <Modal visible={isStatusModalVisible} transparent animationType="slide">
             <View style={styles.modalContainer}>
               <View style={styles.modalContent}>

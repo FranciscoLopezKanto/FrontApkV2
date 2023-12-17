@@ -28,6 +28,7 @@ const ProjectDetail: React.FC<{ route: any; navigation: any }> = ({ route, navig
   const [taskDescription, setTaskDescription] = useState('');
   const [taskEquipoName, setTaskEquipoName] = useState('');
   const [taskEndDate, setTaskEndDate] = useState('');
+  const [reloadData, setReloadData] = useState(false);
 
   useEffect(() => {
     const getProjectDetails = async () => {
@@ -48,7 +49,7 @@ const ProjectDetail: React.FC<{ route: any; navigation: any }> = ({ route, navig
         console.error('Error al obtener detalles del proyecto', error);
       }
     };
-
+    
     getProjectDetails();
   }, [projectName]);
 
@@ -73,6 +74,7 @@ const ProjectDetail: React.FC<{ route: any; navigation: any }> = ({ route, navig
           }
         );
         //addToast('tarea creada con éxito', { appearance: 'success' });
+        setTaskModalVisible(false);
         console.log('Tarea creada con éxito', response.data);
         
       } else {
@@ -159,8 +161,9 @@ const ProjectDetail: React.FC<{ route: any; navigation: any }> = ({ route, navig
         
          //addToast('Proyecto eliminado con éxito', { appearance: 'success' });
         console.log("team agregado ",equipoName)
-        console.log(response.data);
+        
         setEquipoModalVisible(false);
+
       } else if (equipoAction === 'remove') {
         
         const response = await axios.delete(
