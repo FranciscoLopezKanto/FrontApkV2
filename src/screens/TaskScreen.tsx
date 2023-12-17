@@ -3,6 +3,7 @@ import { View, Text, Button, Modal, TextInput, StyleSheet, TouchableOpacity } fr
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRoute, useNavigation } from '@react-navigation/native';
+const backendUrl = process.env.REACT_APP_BACKEND_URL; //no se esta usando por bug que no se pudo resolver
 
 
 const TaskScreen: React.FC = () => {

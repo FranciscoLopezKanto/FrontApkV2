@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity, ImageBackgr
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
-
+const backendUrl = process.env.REACT_APP_BACKEND_URL; //no se esta usando por bug que no se pudo resolver
 const showPasswordIcon = require('../public/MostrarContra.png');
 const backgroundImage = require('../public/fondo.png');
 

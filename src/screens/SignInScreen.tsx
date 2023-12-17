@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity, ImageBackground, Modal, Button } from 'react-native';
 import axios from 'axios';
 import { Picker } from '@react-native-picker/picker';
+const backendUrl = process.env.REACT_APP_BACKEND_URL; //no se esta usando por bug que no se pudo resolver
 
 const showPasswordIcon = require('../public/MostrarContra.png');
 const backgroundImage = require('../public/fondo.png');

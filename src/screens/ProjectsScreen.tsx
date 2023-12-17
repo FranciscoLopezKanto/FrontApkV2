@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, Button, FlatList, StyleSheet, TouchableOpacity, TextInput, Modal } from 'react-native';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
+const backendUrl = process.env.REACT_APP_BACKEND_URL; //no se esta usando por bug que no se pudo resolver
 
 interface Project {
   id: string;

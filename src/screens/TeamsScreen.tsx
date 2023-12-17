@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { View, Text, Button, FlatList, StyleSheet, Modal, TouchableOpacity, TextInput } from 'react-native';
 import axios from 'axios';
@@ -7,6 +6,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons'; 
 import AsyncStorage from '@react-native-async-storage/async-storage';
+const backendUrl = process.env.REACT_APP_BACKEND_URL; //no se esta usando por bug que no se pudo resolver
 
 const TeamsScreen: React.FC = () => {
   const [teams, setTeams] = useState<any[]>([]);

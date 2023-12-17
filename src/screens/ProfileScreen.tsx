@@ -3,6 +3,7 @@ import { View, Text, Button, StyleSheet, Image, TouchableOpacity, Modal, ScrollV
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
+const backendUrl = process.env.REACT_APP_BACKEND_URL; //no se esta usando por bug que no se pudo resolver
 
 // Importa las imágenes locales
 const pinguinoImage = require('../public/pinguino.png');
